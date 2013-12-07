@@ -19,17 +19,19 @@ var isPaused = false
 var isYfreezed = false
 var isFunnyRunning = false
 
-window.duckWalk = require('./')
+var createWalk = require('./')
 
 var skin = require('minecraft-skin')
-window.duck = skin(THREE, 'neg.png')
+var duck = skin(THREE, 'neg.png')
 var renderer = createRenderer(cw, ch)
 var scene = createScene(renderer)
 var camera = createCamera(scene)
 var duckPlayer = duck.createPlayerObject()
+
+var walk = createWalk(null, {skin: duck})
+window.duckWalk = walk  // for index.html controls
 duckPlayer.position.y -= 15
 scene.add(duckPlayer)
-window.duckPlayer = duckPlayer
 render(scene, camera, renderer)
 
 function createScene(width, height, renderer) {
@@ -70,7 +72,7 @@ function render(scene, camera, renderer) {
   }, renderer.domElement)
   var oldRad = rad
 
-  duckWalk.render(duck)
+  walk.render()
   
   mouseY *= 0.97
   rad += 2

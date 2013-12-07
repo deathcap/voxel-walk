@@ -4,21 +4,22 @@ Spreading the good word.  Using --save updates your package.json automatically.
 A simple walk cycle animation for minecraft-skin characters (used in Voxel.js), using code ripped directly out of Daniel Hede's "[Minecraft Items](http://djazz.mine.nu/lab/minecraft_items/)", the same project that birthed the minecraft-skin module.
 
 [Run this example.](http://danfinlay.com/projects/voxeljs/walk/)
-```
-var walk = require('voxel-walk')
-```
-In your render loop you pass it a minecraft-skin object for each tick (npm minecraft-skin).  For example, if you hav a minecraft-skin named duck:
-```
-var render = function () {
-	walk.render(duck)
-}
-```
+
+In the options parameter you pass a minecraft-skin object (npm minecraft-skin).  For example, if you have a minecraft-skin named duck:
+
+    var createWalk = require('voxel-walk')
+
+    walk = createWalk(null, {skin: duck})
+
+In your render loop you call walk.render():
+
+    var render = function () {
+	    walk.render()
+    }
+
 When called, the walk function automatically detects the velocity of the skin, and eases the stride to an appropriate magnitude.
 
 If you want to run the demo, just  run:
-```
-//If you don't have browserify installed:
-npm install beefy -g
 
-beefy demo.js:bundle.js
-```
+    npm install beefy -g
+    beefy demo.js:bundle.js
