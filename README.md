@@ -18,12 +18,7 @@ When called, the walk function automatically detects the velocity of the skin, a
 If you want to run the demo, just  run:
 ```
 //If you don't have browserify installed:
-npm install browserify -g
+npm install beefy -g
 
-browserify demo.js -o bundle.js
-
-//If you don't have http-server installed:
-npm install http-server -g
-
-http-server
+beefy demo.js:bundle.js
 ```
