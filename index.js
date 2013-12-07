@@ -6,6 +6,7 @@ module.exports = function(game, opts) {
 function Walk(game, opts) {
   opts = opts || {}
 
+  this.game = game  // note: optional
   this.skin = opts.skin
   if (!this.skin) throw "voxel-walk requires skin opt"
   this.walkSpeed = opts.walkSpeed || 1.0
@@ -13,6 +14,26 @@ function Walk(game, opts) {
   this.stoppedWalking = 0.0
   this.walking = false
   this.acceleration = opts.acceleration || 1.0
+
+  if (opts.bindGameEvents && this.game) {
+    this.shouldStopWalking = opts.shouldStopWalking
+    this.bindGameEvents()
+  }
+}
+
+Walk.prototype.bindGameEvents = function() {
+  var self = this
+
+  this.game.on('tick', function() {
+     self.render()
+     if (self.shouldStopWalking !== undefined) {
+       if (self.shouldStopWalking()) {
+         self.stopWalking() 
+       } else {
+         self.startWalking()
+       }
+     }
+  })
 }
 
 Walk.prototype.render = function() {

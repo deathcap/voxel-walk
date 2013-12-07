@@ -19,7 +19,11 @@ In your render loop you call walk.render():
 
 When called, the walk function automatically detects the velocity of the skin, and eases the stride to an appropriate magnitude.
 
-If you want to run the demo, just  run:
+Alternatively you can pass a voxel-engine instance and enable `bindGameEvents`, then `render()` will be automatically called on the game `tick` event:
+
+    walk = createWalk(game, {skin: skin, bindGameEvents: true})
+
+If you want to run the demo, just run:
 
     npm install beefy -g
     beefy demo.js:bundle.js
