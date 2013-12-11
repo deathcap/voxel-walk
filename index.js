@@ -15,16 +15,14 @@ function Walk(game, opts) {
   this.walking = false
   this.acceleration = opts.acceleration || 1.0
 
-  if (opts.bindGameEvents && this.game) {
-    this.shouldStopWalking = opts.shouldStopWalking
-    this.bindGameEvents()
-  }
+  this.shouldStopWalking = opts.shouldStopWalking
+  if (this.game) this.enable()
 }
 
-Walk.prototype.bindGameEvents = function() {
+Walk.prototype.enable = function() {
   var self = this
 
-  this.game.on('tick', function() {
+  function tick() {
      self.render()
      if (self.shouldStopWalking !== undefined) {
        if (self.shouldStopWalking()) {
@@ -33,7 +31,14 @@ Walk.prototype.bindGameEvents = function() {
          self.startWalking()
        }
      }
-  })
+  }
+
+  this.game.on('tick', tick)
+  this.tick = tick
+}
+
+Walk.prototype.disable = function() {
+  this.game.removeListener('tick', this.tick);
 }
 
 Walk.prototype.render = function() {
