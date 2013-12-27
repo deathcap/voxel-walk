@@ -17,13 +17,6 @@ function Walk(game, opts) {
   this.acceleration = opts.acceleration || 1.0
   this.walkThreshold = opts.walkThreshold || 0.001
 
-  var self = this;
-  this.shouldStopWalking = opts.shouldStopWalking || function() {
-    vx = Math.abs(self.controlsTarget.velocity.x)
-    vz = Math.abs(self.controlsTarget.velocity.z)
-    return vx > self.walkThreshold || vz > self.walkThreshold
-  }
-
   if (this.game) this.enable()
 }
 
@@ -33,12 +26,10 @@ Walk.prototype.enable = function() {
   function tick() {
      // TODO: rate-limit? see https://github.com/flyswatter/voxel-walk/issues/3
      self.render()
-     if (self.shouldStopWalking !== undefined) {
-       if (self.shouldStopWalking()) {
-         self.stopWalking() 
-       } else {
-         self.startWalking()
-       }
+     if (self.shouldStopWalking()) {
+       self.stopWalking() 
+     } else {
+       self.startWalking()
      }
   }
 
@@ -48,6 +39,12 @@ Walk.prototype.enable = function() {
 
 Walk.prototype.disable = function() {
   this.game.removeListener('tick', this.tick);
+}
+
+Walk.prototype.shouldStopWalking = function() {
+  var vx = Math.abs(this.controlsTarget.velocity.x)
+  var vz = Math.abs(this.controlsTarget.velocity.z)
+  return vx > this.walkThreshold || vz > this.walkThreshold
 }
 
 Walk.prototype.render = function() {
