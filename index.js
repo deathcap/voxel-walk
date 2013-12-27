@@ -4,7 +4,7 @@ module.exports = function(game, opts) {
 }
 
 module.exports.pluginInfo = {
-  'loadAfter': ['player'] // for game.controls.target()
+  loadAfter: ['voxel-player'] // for game.controls.target()
 }
 
 function Walk(game, opts) {
