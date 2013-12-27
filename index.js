@@ -7,15 +7,23 @@ function Walk(game, opts) {
   opts = opts || {}
 
   this.game = game  // note: optional
-  this.skin = opts.skin
+  this.controlsTarget = opts.controlsTarget
+  this.skin = opts.skin || opts.controlsTarget.playerSkin // voxel-player
   if (!this.skin) throw "voxel-walk requires skin opt"
   this.walkSpeed = opts.walkSpeed || 1.0
   this.startedWalking = 0.0
   this.stoppedWalking = 0.0
   this.walking = false
   this.acceleration = opts.acceleration || 1.0
+  this.walkThreshold = opts.walkThreshold || 0.001
 
-  this.shouldStopWalking = opts.shouldStopWalking
+  var self = this;
+  this.shouldStopWalking = opts.shouldStopWalking || function() {
+    vx = Math.abs(self.controlsTarget.velocity.x)
+    vz = Math.abs(self.controlsTarget.velocity.z)
+    return vx > self.walkThreshold || vz > self.walkThreshold
+  }
+
   if (this.game) this.enable()
 }
 
@@ -23,6 +31,7 @@ Walk.prototype.enable = function() {
   var self = this
 
   function tick() {
+     // TODO: rate-limit? see https://github.com/flyswatter/voxel-walk/issues/3
      self.render()
      if (self.shouldStopWalking !== undefined) {
        if (self.shouldStopWalking()) {
