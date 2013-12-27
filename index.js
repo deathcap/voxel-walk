@@ -1,6 +1,10 @@
 
 module.exports = function(game, opts) {
-    return new Walk(game, opts)
+  return new Walk(game, opts)
+}
+
+module.exports.pluginInfo = {
+  'loadAfter': ['player'] // for game.controls.target()
 }
 
 function Walk(game, opts) {
@@ -8,8 +12,7 @@ function Walk(game, opts) {
 
   this.game = game  // note: optional
   this.controlsTarget = opts.controlsTarget
-  this.skin = opts.skin || opts.controlsTarget.playerSkin // voxel-player
-  if (!this.skin) throw "voxel-walk requires skin opt"
+  this.skin = opts.skin
   this.walkSpeed = opts.walkSpeed || 1.0
   this.startedWalking = 0.0
   this.stoppedWalking = 0.0
@@ -21,6 +24,11 @@ function Walk(game, opts) {
 }
 
 Walk.prototype.enable = function() {
+  if (!this.controlsTarget && this.game && this.game.controls) this.controlsTarget = this.game.controls.target()
+  if (!this.skin) this.skin = this.controlsTarget.playerSkin
+
+  if (!this.skin) throw 'voxel-walk could not find controlsTarget or skin'
+
   var self = this
 
   function tick() {
