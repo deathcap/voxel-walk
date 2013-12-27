@@ -2,6 +2,10 @@
   "name": "voxel-walk",
   "version": "0.0.5",
   "description": "A simple walk animation for minecraft-skin characters.",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:flyswatter/voxel-walk.git"
+  },
   "dependencies": {
     "voxel-engine": ">=0.5.3",
     "minecraft-skin": "~0.1.2"
