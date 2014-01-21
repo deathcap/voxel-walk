@@ -8,6 +8,7 @@ module.exports.pluginInfo = {
 }
 
 function Walk(game, opts) {
+  if (!game.isClient) return;
   opts = opts || {}
 
   this.game = game  // note: optional
