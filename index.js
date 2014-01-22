@@ -4,11 +4,11 @@ module.exports = function(game, opts) {
 }
 
 module.exports.pluginInfo = {
-  loadAfter: ['voxel-player'] // for game.controls.target()
+  loadAfter: ['voxel-player'], // for game.controls.target()
+  clientOnly: true
 }
 
 function Walk(game, opts) {
-  if (!game.isClient) return;
   opts = opts || {}
 
   this.game = game  // note: optional
