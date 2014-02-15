@@ -28,7 +28,7 @@ Walk.prototype.enable = function() {
   if (!this.controlsTarget && this.game && this.game.controls) this.controlsTarget = this.game.controls.target()
   if (!this.skin) this.skin = this.controlsTarget.playerSkin
 
-  if (!this.skin) throw 'voxel-walk could not find controlsTarget or skin'
+  if (!this.skin) throw new Error('voxel-walk could not find controlsTarget or skin')
 
   var self = this
 
